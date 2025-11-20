@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Moon, Sun, Mail, Linkedin, Download, GraduationCap, Briefcase, Code, Award, Menu, X } from 'lucide-react';
+import headshot from './assets/IMG_0661.JPG';
+import resumeFile from './assets/Shartle-Bryce-College-Resume.pdf';
 
 function App() {
   const [isDark, setIsDark] = useState(false);
@@ -158,7 +160,7 @@ function App() {
             <div className="flex-shrink-0">
               <div className="w-48 h-48 rounded-full overflow-hidden border-4" style={{ borderColor: garnet }}>
                 <img
-                  src="/bryceshartle-site/IMG_0661.JPG"
+                  src={headshot}
                   alt="Bryce Shartle"
                   className="w-full h-full object-cover"
                 />
@@ -380,7 +382,7 @@ function App() {
             Download my complete resume to learn more about my experience and qualifications.
           </p>
           <a
-            href="/bryceshartle-site/Shartle-Bryce-College-Resume.pdf"
+            href={resumeFile}
             download="Bryce_Shartle_Resume.pdf"
             className="inline-flex items-center gap-3 px-8 py-4 rounded-lg text-white font-semibold transition-all hover:opacity-90 shadow-lg text-lg"
             style={{ backgroundColor: garnet }}
