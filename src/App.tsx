@@ -158,7 +158,7 @@ function App() {
             <div className="flex-shrink-0">
               <div className="w-48 h-48 rounded-full overflow-hidden border-4" style={{ borderColor: garnet }}>
                 <img
-                  src="/IMG_0661.JPG"
+                  src="/bryceshartle-site/IMG_0661.JPG"
                   alt="Bryce Shartle"
                   className="w-full h-full object-cover"
                 />
@@ -380,7 +380,7 @@ function App() {
             Download my complete resume to learn more about my experience and qualifications.
           </p>
           <a
-            href="/Shartle,%20Bryce%20-%20College%20Resume%20copy.pdf"
+            href="/bryceshartle-site/Shartle-Bryce-College-Resume.pdf"
             download="Bryce_Shartle_Resume.pdf"
             className="inline-flex items-center gap-3 px-8 py-4 rounded-lg text-white font-semibold transition-all hover:opacity-90 shadow-lg text-lg"
             style={{ backgroundColor: garnet }}
