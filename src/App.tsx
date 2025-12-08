@@ -197,32 +197,32 @@ function App() {
   ];
 
   const portfolioItems = [
-    {
-      image: '/portfolio/img_0001.jpg',
-      title: 'Project 1',
-      category: 'Data Analytics'
-    },
-    {
-      image: '/portfolio/img_0815.jpg',
-      title: 'Project 2',
-      category: 'Engineering'
-    },
-    {
-      image: '/portfolio/img_0818_2.jpg',
-      title: 'Project 3',
-      category: 'Technology'
-    },
-    {
-      image: '/portfolio/img_1579.jpg',
-      title: 'Project 4',
-      category: 'Innovation'
-    },
-    {
-      image: '/portfolio/2025-0415_161.jpg',
-      title: 'Project 5',
-      category: 'Leadership'
-    }
-  ];
+  {
+    image: '/CAPSTONE.JPG',
+    title: 'Senior Capstone Presentation',
+    category: 'Capstone Project'
+  },
+  {
+    image: '/CHARTER_GROUP.JPG',
+    title: 'Delta Chi Chartering Group',
+    category: 'Leadership'
+  },
+  {
+    image: '/CHARTER_SPEECH.JPG',
+    title: 'Chartering Speech',
+    category: 'Public Speaking'
+  },
+  {
+    image: '/MICHELIN_GROUP.jpg',
+    title: 'Michelin Internship',
+    category: 'Professional Experience'
+  },
+  {
+    image: '/PRESIDENT.JPG',
+    title: 'President’s Reception',
+    category: 'Recognition'
+  }
+];
 
   return (
     <div className={`min-h-screen transition-colors duration-300 ${isDark ? 'bg-neutral-900 text-white' : 'bg-white text-gray-900'}`}>
