@@ -1,9 +1,110 @@
-import { useState } from 'react';
-import { Moon, Sun, Mail, Linkedin, Download, GraduationCap, Briefcase, Code, Award, Menu, X } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { Moon, Sun, Mail, Linkedin, Download, GraduationCap, Briefcase, Code, Award, Menu, X, Database, TrendingUp, BarChart3, Cpu, Network, Server, Camera, Image as ImageIcon } from 'lucide-react';
+
+interface GalleryItem {
+  image: string;
+  title: string;
+  category: string;
+}
+
+function InfiniteGallery({ items, isDark }: { items: GalleryItem[], isDark: boolean }) {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [isScrolling, setIsScrolling] = useState(false);
+
+  // Create tripled array for seamless infinite scroll
+  const tripledItems = [...items, ...items, ...items];
+
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    // Start at the middle set of items
+    const itemWidth = 320 + 24; // width + gap
+    const startPosition = items.length * itemWidth;
+    container.scrollLeft = startPosition;
+
+    let scrollTimeout: NodeJS.Timeout;
+
+    const handleScroll = () => {
+      if (isScrolling) return;
+
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        const scrollLeft = container.scrollLeft;
+        const maxScroll = container.scrollWidth - container.clientWidth;
+        const singleSetWidth = items.length * itemWidth;
+
+        // If scrolled past the second set, jump back to first set
+        if (scrollLeft >= singleSetWidth * 2 - itemWidth) {
+          setIsScrolling(true);
+          container.scrollLeft = scrollLeft - singleSetWidth;
+          setTimeout(() => setIsScrolling(false), 50);
+        }
+        // If scrolled before the first set, jump to second set
+        else if (scrollLeft <= itemWidth) {
+          setIsScrolling(true);
+          container.scrollLeft = scrollLeft + singleSetWidth;
+          setTimeout(() => setIsScrolling(false), 50);
+        }
+      }, 150);
+    };
+
+    container.addEventListener('scroll', handleScroll);
+    return () => {
+      container.removeEventListener('scroll', handleScroll);
+      clearTimeout(scrollTimeout);
+    };
+  }, [items.length, isScrolling]);
+
+  return (
+    <div
+      ref={scrollContainerRef}
+      className="flex gap-6 overflow-x-auto pb-6 scrollbar-hide snap-x snap-mandatory"
+      style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+    >
+      {tripledItems.map((item, idx) => (
+        <div
+          key={idx}
+          className={`flex-shrink-0 w-80 h-80 rounded-2xl overflow-hidden shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl snap-center cursor-pointer ${isDark ? 'bg-neutral-700' : 'bg-white'}`}
+        >
+          <img
+            src={item.image}
+            alt={item.title}
+            className="w-full h-full object-cover"
+          />
+        </div>
+      ))}
+    </div>
+  );
+}
 
 function App() {
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.15,
+      rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          entry.target.classList.remove('hidden-scroll');
+        } else {
+          entry.target.classList.remove('revealed');
+          entry.target.classList.add('hidden-scroll');
+        }
+      });
+    }, observerOptions);
+
+    const elements = document.querySelectorAll('.scroll-reveal');
+    elements.forEach(el => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, []);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -95,23 +196,52 @@ function App() {
     }
   ];
 
+  const portfolioItems = [
+    {
+      image: '/portfolio/img_0001.jpg',
+      title: 'Project 1',
+      category: 'Data Analytics'
+    },
+    {
+      image: '/portfolio/img_0815.jpg',
+      title: 'Project 2',
+      category: 'Engineering'
+    },
+    {
+      image: '/portfolio/img_0818_2.jpg',
+      title: 'Project 3',
+      category: 'Technology'
+    },
+    {
+      image: '/portfolio/img_1579.jpg',
+      title: 'Project 4',
+      category: 'Innovation'
+    },
+    {
+      image: '/portfolio/2025-0415_161.jpg',
+      title: 'Project 5',
+      category: 'Leadership'
+    }
+  ];
+
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${isDark ? 'bg-black text-white' : 'bg-white text-gray-900'}`}>
+    <div className={`min-h-screen transition-colors duration-300 ${isDark ? 'bg-neutral-900 text-white' : 'bg-white text-gray-900'}`}>
       {/* Navigation */}
-      <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${isDark ? 'bg-black/95 border-gray-800' : 'bg-white/95 border-gray-200'} border-b backdrop-blur-sm`}>
+      <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${isDark ? 'bg-neutral-900/95 border-neutral-800' : 'bg-white/95 border-gray-200'} border-b backdrop-blur-sm`}>
         <div className="max-w-6xl mx-auto px-6 py-4">
           <div className="flex justify-between items-center">
             <h1 className="text-xl font-bold" style={{ color: garnet }}>Bryce Shartle</h1>
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-8">
-              <button onClick={() => scrollToSection('home')} className={`transition-colors ${isDark ? 'hover:text-gray-300' : 'hover:text-gray-600'}`}>Home</button>
-              <button onClick={() => scrollToSection('about')} className={`transition-colors ${isDark ? 'hover:text-gray-300' : 'hover:text-gray-600'}`}>About</button>
-              <button onClick={() => scrollToSection('experience')} className={`transition-colors ${isDark ? 'hover:text-gray-300' : 'hover:text-gray-600'}`}>Experience</button>
-              <button onClick={() => scrollToSection('skills')} className={`transition-colors ${isDark ? 'hover:text-gray-300' : 'hover:text-gray-600'}`}>Skills</button>
-              <button onClick={() => scrollToSection('leadership')} className={`transition-colors ${isDark ? 'hover:text-gray-300' : 'hover:text-gray-600'}`}>Leadership</button>
-              <button onClick={() => scrollToSection('resume')} className={`transition-colors ${isDark ? 'hover:text-gray-300' : 'hover:text-gray-600'}`}>Resume</button>
-              <button onClick={() => scrollToSection('contact')} className={`transition-colors ${isDark ? 'hover:text-gray-300' : 'hover:text-gray-600'}`}>Contact</button>
+              <button onClick={() => scrollToSection('home')} className="transition-colors hover:opacity-80" style={{ ['--hover-color' as string]: garnet }} onMouseEnter={(e) => e.currentTarget.style.color = garnet} onMouseLeave={(e) => e.currentTarget.style.color = ''}>Home</button>
+              <button onClick={() => scrollToSection('about')} className="transition-colors hover:opacity-80" onMouseEnter={(e) => e.currentTarget.style.color = garnet} onMouseLeave={(e) => e.currentTarget.style.color = ''}>About</button>
+              <button onClick={() => scrollToSection('experience')} className="transition-colors hover:opacity-80" onMouseEnter={(e) => e.currentTarget.style.color = garnet} onMouseLeave={(e) => e.currentTarget.style.color = ''}>Experience</button>
+              <button onClick={() => scrollToSection('skills')} className="transition-colors hover:opacity-80" onMouseEnter={(e) => e.currentTarget.style.color = garnet} onMouseLeave={(e) => e.currentTarget.style.color = ''}>Skills</button>
+              <button onClick={() => scrollToSection('leadership')} className="transition-colors hover:opacity-80" onMouseEnter={(e) => e.currentTarget.style.color = garnet} onMouseLeave={(e) => e.currentTarget.style.color = ''}>Leadership</button>
+              <button onClick={() => scrollToSection('gallery')} className="transition-colors hover:opacity-80" onMouseEnter={(e) => e.currentTarget.style.color = garnet} onMouseLeave={(e) => e.currentTarget.style.color = ''}>Gallery</button>
+              <button onClick={() => scrollToSection('resume')} className="transition-colors hover:opacity-80" onMouseEnter={(e) => e.currentTarget.style.color = garnet} onMouseLeave={(e) => e.currentTarget.style.color = ''}>Resume</button>
+              <button onClick={() => scrollToSection('contact')} className="transition-colors hover:opacity-80" onMouseEnter={(e) => e.currentTarget.style.color = garnet} onMouseLeave={(e) => e.currentTarget.style.color = ''}>Contact</button>
               <button
                 onClick={() => setIsDark(!isDark)}
                 className="p-2 rounded-full transition-colors"
@@ -139,48 +269,55 @@ function App() {
           {/* Mobile Navigation */}
           {mobileMenuOpen && (
             <div className="md:hidden mt-4 pb-4 flex flex-col gap-3">
-              <button onClick={() => scrollToSection('home')} className={`text-left transition-colors ${isDark ? 'hover:text-gray-300' : 'hover:text-gray-600'}`}>Home</button>
-              <button onClick={() => scrollToSection('about')} className={`text-left transition-colors ${isDark ? 'hover:text-gray-300' : 'hover:text-gray-600'}`}>About</button>
-              <button onClick={() => scrollToSection('experience')} className={`text-left transition-colors ${isDark ? 'hover:text-gray-300' : 'hover:text-gray-600'}`}>Experience</button>
-              <button onClick={() => scrollToSection('skills')} className={`text-left transition-colors ${isDark ? 'hover:text-gray-300' : 'hover:text-gray-600'}`}>Skills</button>
-              <button onClick={() => scrollToSection('leadership')} className={`text-left transition-colors ${isDark ? 'hover:text-gray-300' : 'hover:text-gray-600'}`}>Leadership</button>
-              <button onClick={() => scrollToSection('resume')} className={`text-left transition-colors ${isDark ? 'hover:text-gray-300' : 'hover:text-gray-600'}`}>Resume</button>
-              <button onClick={() => scrollToSection('contact')} className={`text-left transition-colors ${isDark ? 'hover:text-gray-300' : 'hover:text-gray-600'}`}>Contact</button>
+              <button onClick={() => scrollToSection('home')} className="text-left transition-colors hover:opacity-80" onMouseEnter={(e) => e.currentTarget.style.color = garnet} onMouseLeave={(e) => e.currentTarget.style.color = ''}>Home</button>
+              <button onClick={() => scrollToSection('about')} className="text-left transition-colors hover:opacity-80" onMouseEnter={(e) => e.currentTarget.style.color = garnet} onMouseLeave={(e) => e.currentTarget.style.color = ''}>About</button>
+              <button onClick={() => scrollToSection('experience')} className="text-left transition-colors hover:opacity-80" onMouseEnter={(e) => e.currentTarget.style.color = garnet} onMouseLeave={(e) => e.currentTarget.style.color = ''}>Experience</button>
+              <button onClick={() => scrollToSection('skills')} className="text-left transition-colors hover:opacity-80" onMouseEnter={(e) => e.currentTarget.style.color = garnet} onMouseLeave={(e) => e.currentTarget.style.color = ''}>Skills</button>
+              <button onClick={() => scrollToSection('leadership')} className="text-left transition-colors hover:opacity-80" onMouseEnter={(e) => e.currentTarget.style.color = garnet} onMouseLeave={(e) => e.currentTarget.style.color = ''}>Leadership</button>
+              <button onClick={() => scrollToSection('gallery')} className="text-left transition-colors hover:opacity-80" onMouseEnter={(e) => e.currentTarget.style.color = garnet} onMouseLeave={(e) => e.currentTarget.style.color = ''}>Gallery</button>
+              <button onClick={() => scrollToSection('resume')} className="text-left transition-colors hover:opacity-80" onMouseEnter={(e) => e.currentTarget.style.color = garnet} onMouseLeave={(e) => e.currentTarget.style.color = ''}>Resume</button>
+              <button onClick={() => scrollToSection('contact')} className="text-left transition-colors hover:opacity-80" onMouseEnter={(e) => e.currentTarget.style.color = garnet} onMouseLeave={(e) => e.currentTarget.style.color = ''}>Contact</button>
             </div>
           )}
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section id="home" className="pt-32 pb-20 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col md:flex-row items-center gap-12">
-            <div className="flex-shrink-0">
-              <div className="w-48 h-48 rounded-full overflow-hidden border-4" style={{ borderColor: garnet }}>
-                <img
-                  src="./IMG_0661.JPG"
-                  alt="Bryce Shartle"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </div>
-            <div className="flex-1 text-center md:text-left">
-              <h2 className="text-5xl md:text-6xl font-bold mb-4">Bryce Shartle</h2>
-              <p className="text-2xl md:text-3xl mb-6" style={{ color: garnet }}>Data Analyst & Technology Leader</p>
-              <p className={`text-lg md:text-xl mb-8 ${isDark ? 'text-gray-300' : 'text-gray-700'} max-w-2xl`}>
+      <section id="home" className="pt-24 pb-20 px-6 relative overflow-hidden min-h-[70vh] md:min-h-[75vh] flex items-center">
+        <div className="absolute inset-0 pointer-events-none">
+          <Database className={`absolute top-20 left-10 animate-fadeInOut1 ${isDark ? 'opacity-0' : 'opacity-0'}`} size={60} style={{ color: garnet }} />
+          <BarChart3 className={`absolute top-40 right-20 animate-fadeInOut2 ${isDark ? 'opacity-0' : 'opacity-0'}`} size={50} style={{ color: garnet }} />
+          <Cpu className={`absolute bottom-20 left-1/4 animate-fadeInOut3 ${isDark ? 'opacity-0' : 'opacity-0'}`} size={55} style={{ color: garnet }} />
+          <Network className={`absolute top-60 right-1/3 animate-fadeInOut4 ${isDark ? 'opacity-0' : 'opacity-0'}`} size={45} style={{ color: garnet }} />
+          <TrendingUp className={`absolute top-1/4 left-1/3 animate-fadeInOut5 ${isDark ? 'opacity-0' : 'opacity-0'}`} size={52} style={{ color: garnet }} />
+          <Server className={`absolute bottom-40 right-10 animate-fadeInOut6 ${isDark ? 'opacity-0' : 'opacity-0'}`} size={48} style={{ color: garnet }} />
+          <Code className={`absolute top-1/3 right-1/4 animate-fadeInOut1 ${isDark ? 'opacity-0' : 'opacity-0'}`} size={58} style={{ color: garnet }} />
+          <Database className={`absolute bottom-1/3 left-20 animate-fadeInOut2 ${isDark ? 'opacity-0' : 'opacity-0'}`} size={54} style={{ color: garnet }} />
+          <BarChart3 className={`absolute top-1/2 left-1/2 animate-fadeInOut3 ${isDark ? 'opacity-0' : 'opacity-0'}`} size={46} style={{ color: garnet }} />
+          <Network className={`absolute bottom-1/4 right-1/3 animate-fadeInOut4 ${isDark ? 'opacity-0' : 'opacity-0'}`} size={50} style={{ color: garnet }} />
+          <Cpu className={`absolute top-1/3 left-10 animate-fadeInOut5 ${isDark ? 'opacity-0' : 'opacity-0'}`} size={56} style={{ color: garnet }} />
+          <TrendingUp className={`absolute bottom-32 left-1/2 animate-fadeInOut6 ${isDark ? 'opacity-0' : 'opacity-0'}`} size={44} style={{ color: garnet }} />
+        </div>
+
+        <div className="max-w-6xl mx-auto w-full relative z-10">
+          <div className="relative">
+            <div className="max-w-3xl mb-8 md:mb-0">
+              <h2 className="text-5xl md:text-6xl font-bold mb-4 scroll-reveal animate-fadeInUp">Bryce Shartle</h2>
+              <p className="text-2xl md:text-3xl mb-6 scroll-reveal animate-fadeInUp" style={{ color: garnet, animationDelay: '0.1s' }}>Data Analyst & Technology Leader</p>
+              <p className={`text-lg md:text-xl mb-8 ${isDark ? 'text-gray-300' : 'text-gray-700'} max-w-2xl scroll-reveal animate-fadeInUp`} style={{ animationDelay: '0.2s' }}>
                 Recent graduate from the University of South Carolina seeking opportunities in data analytics, business intelligence, and technology leadership. Passionate about data-driven solutions, AI innovation, and operational excellence with experience in logistics optimization and strategic leadership.
               </p>
-              <div className="flex gap-4 justify-center md:justify-start">
+              <div className="flex gap-4 flex-wrap scroll-reveal animate-fadeInUp" style={{ animationDelay: '0.3s' }}>
                 <button
                   onClick={() => scrollToSection('contact')}
-                  className="px-8 py-3 rounded-lg text-white font-semibold transition-all hover:opacity-90 shadow-lg"
+                  className="px-8 py-3 rounded-lg text-white font-semibold transition-all duration-300 hover:opacity-90 hover:scale-105 hover:shadow-2xl shadow-lg"
                   style={{ backgroundColor: garnet }}
                 >
                   Get In Touch
                 </button>
                 <button
                   onClick={() => scrollToSection('resume')}
-                  className={`px-8 py-3 rounded-lg font-semibold transition-all ${isDark ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gray-100 hover:bg-gray-200'}`}
+                  className={`px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105 hover:shadow-2xl ${isDark ? 'bg-neutral-700 hover:bg-neutral-600' : 'bg-gray-100 hover:bg-gray-200'}`}
                 >
                   View Resume
                 </button>
@@ -188,29 +325,47 @@ function App() {
             </div>
           </div>
         </div>
+
+        <div className="absolute bottom-0 left-1/2 md:left-auto md:right-[8%] transform -translate-x-1/2 md:translate-x-0 z-0 pointer-events-none">
+          <div className="absolute inset-0 -bottom-8 left-1/2 transform -translate-x-1/2 w-[120%] h-[60%] bg-gradient-radial from-garnet/8 via-garnet/4 to-transparent blur-2xl opacity-60" style={{
+            background: `radial-gradient(ellipse at center bottom, ${garnet}15 0%, ${garnet}08 30%, transparent 70%)`
+          }}></div>
+
+          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-[80%] h-12 bg-black/20 blur-3xl opacity-40"></div>
+
+          <img
+            src="/subject2.png"
+            alt="Bryce Shartle"
+            className="relative h-[38vh] md:h-[49vh] lg:h-[56vh] w-auto object-contain object-bottom scroll-reveal animate-fadeInUp"
+            style={{
+              animationDelay: '0.4s',
+              filter: 'drop-shadow(0 25px 50px rgba(0, 0, 0, 0.25))'
+            }}
+          />
+        </div>
       </section>
 
       {/* About Section */}
-      <section id="about" className={`py-20 px-6 ${isDark ? 'bg-gray-900/50' : 'bg-gray-50'}`}>
+      <section id="about" className={`py-20 px-6 ${isDark ? 'bg-neutral-800' : 'bg-gray-50'}`}>
         <div className="max-w-6xl mx-auto">
-          <div className="flex items-center gap-3 mb-12">
+          <div className="flex items-center gap-3 mb-12 scroll-reveal">
             <GraduationCap size={32} style={{ color: garnet }} />
             <h3 className="text-4xl font-bold">About Me</h3>
           </div>
           <div className="grid md:grid-cols-2 gap-12">
-            <div>
+            <div className="scroll-reveal">
               <p className={`text-lg leading-relaxed mb-6 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
                 My professional journey has been shaped by impactful internships at Michelin, where I led the development of AI-enhanced logistics solutions that optimize warehouse operations across North America. I combine technical expertise in data analytics, SQL, Power BI, Python, and machine learning with strong leadership skills honed through roles as a Resident Assistant and Delta Chi Fraternity Vice President.
               </p>
             </div>
-            <div className="space-y-6">
+            <div className="space-y-6 scroll-reveal">
               <p className={`text-lg leading-relaxed ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
                 I'm passionate about leveraging technology to solve complex business challenges and drive operational efficiency. My interests span across artificial intelligence, data analytics, motorsports, and exploring how data shapes modern society. I thrive in collaborative environments where I can apply both technical skills and strategic thinking to create meaningful impact.
               </p>
             </div>
           </div>
 
-          <div className={`mt-12 p-8 rounded-lg ${isDark ? 'bg-gray-800' : 'bg-white'} shadow-lg`}>
+          <div className={`mt-12 p-8 rounded-lg ${isDark ? 'bg-neutral-700' : 'bg-white'} shadow-lg transition-transform duration-300 hover:scale-[1.02] hover:shadow-2xl scroll-reveal`}>
             <h4 className="text-2xl font-semibold mb-6" style={{ color: garnet }}>Education</h4>
             <div className="grid md:grid-cols-2 gap-6">
               <div>
@@ -229,15 +384,15 @@ function App() {
       </section>
 
       {/* Experience Section */}
-      <section id="experience" className="py-20 px-6">
+      <section id="experience" className={`py-20 px-6 ${isDark ? 'bg-neutral-900' : 'bg-white'}`}>
         <div className="max-w-6xl mx-auto">
-          <div className="flex items-center gap-3 mb-12">
+          <div className="flex items-center gap-3 mb-12 scroll-reveal">
             <Briefcase size={32} style={{ color: garnet }} />
             <h3 className="text-4xl font-bold">Professional Experience</h3>
           </div>
           <div className="space-y-12">
             {experiences.map((exp, idx) => (
-              <div key={idx} className={`p-8 rounded-lg ${isDark ? 'bg-gray-900/50' : 'bg-gray-50'} shadow-lg`}>
+              <div key={idx} className={`p-8 rounded-lg ${isDark ? 'bg-neutral-800' : 'bg-gray-50'} shadow-lg transition-transform duration-300 hover:scale-[1.01] hover:shadow-2xl scroll-reveal`}>
                 <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-6">
                   <div>
                     <h4 className="text-2xl font-bold mb-2" style={{ color: garnet }}>{exp.company}</h4>
@@ -269,41 +424,41 @@ function App() {
       </section>
 
       {/* Skills Section */}
-      <section id="skills" className={`py-20 px-6 ${isDark ? 'bg-gray-900/50' : 'bg-gray-50'}`}>
+      <section id="skills" className={`py-20 px-6 ${isDark ? 'bg-neutral-800' : 'bg-gray-50'}`}>
         <div className="max-w-6xl mx-auto">
-          <div className="flex items-center gap-3 mb-12">
+          <div className="flex items-center gap-3 mb-12 scroll-reveal">
             <Code size={32} style={{ color: garnet }} />
             <h3 className="text-4xl font-bold">Technical Skills</h3>
           </div>
-          <div className="flex flex-wrap gap-4 justify-center">
+          <div className="flex flex-wrap gap-4 justify-center scroll-reveal">
             {skills.map((skill, idx) => (
               <span
                 key={idx}
-                className={`px-6 py-3 rounded-full text-lg font-semibold transition-all hover:scale-105 ${isDark ? 'bg-gray-800' : 'bg-white'} shadow-lg`}
+                className={`px-6 py-3 rounded-full text-lg font-semibold ${isDark ? 'bg-neutral-700' : 'bg-white'} shadow-lg cursor-default transition-transform duration-300 hover:scale-110 hover:shadow-2xl`}
                 style={{ borderLeft: `4px solid ${garnet}` }}
               >
                 {skill}
               </span>
             ))}
           </div>
-          <div className="mt-16">
+          <div className="mt-16 scroll-reveal">
             <h4 className="text-2xl font-semibold mb-8 text-center">Programs & Communities</h4>
             <div className="grid md:grid-cols-2 gap-6">
-              <div className={`p-6 rounded-lg ${isDark ? 'bg-gray-800' : 'bg-white'} shadow-lg`}>
+              <div className={`p-6 rounded-lg ${isDark ? 'bg-neutral-700' : 'bg-white'} shadow-lg transition-transform duration-300 hover:scale-[1.03] hover:shadow-2xl`}>
                 <p className={`text-lg ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Formula SAE (Tractive Team)</p>
               </div>
-              <div className={`p-6 rounded-lg ${isDark ? 'bg-gray-800' : 'bg-white'} shadow-lg`}>
+              <div className={`p-6 rounded-lg ${isDark ? 'bg-neutral-700' : 'bg-white'} shadow-lg transition-transform duration-300 hover:scale-[1.03] hover:shadow-2xl`}>
                 <p className={`text-lg ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Rhodos Fellows Innovation Community</p>
               </div>
-              <div className={`p-6 rounded-lg ${isDark ? 'bg-gray-800' : 'bg-white'} shadow-lg`}>
+              <div className={`p-6 rounded-lg ${isDark ? 'bg-neutral-700' : 'bg-white'} shadow-lg transition-transform duration-300 hover:scale-[1.03] hover:shadow-2xl`}>
                 <p className={`text-lg ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Delta Chi Fraternity</p>
               </div>
-              <div className={`p-6 rounded-lg ${isDark ? 'bg-gray-800' : 'bg-white'} shadow-lg`}>
+              <div className={`p-6 rounded-lg ${isDark ? 'bg-neutral-700' : 'bg-white'} shadow-lg transition-transform duration-300 hover:scale-[1.03] hover:shadow-2xl`}>
                 <p className={`text-lg ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>IDEA Community</p>
               </div>
             </div>
           </div>
-          <div className="mt-12">
+          <div className="mt-12 scroll-reveal">
             <h4 className="text-2xl font-semibold mb-6 text-center">Interests</h4>
             <p className={`text-lg text-center ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
               Motorsport • Artificial Intelligence • Impact of Data on Modern Society • Automation • Implementation of Power BI
@@ -313,15 +468,15 @@ function App() {
       </section>
 
       {/* Leadership Section */}
-      <section id="leadership" className="py-20 px-6">
+      <section id="leadership" className={`py-20 px-6 ${isDark ? 'bg-neutral-900' : 'bg-white'}`}>
         <div className="max-w-6xl mx-auto">
-          <div className="flex items-center gap-3 mb-12">
+          <div className="flex items-center gap-3 mb-12 scroll-reveal">
             <Award size={32} style={{ color: garnet }} />
             <h3 className="text-4xl font-bold">Leadership & Community Engagement</h3>
           </div>
           <div className="space-y-8">
             {leadership.map((item, idx) => (
-              <div key={idx} className={`p-8 rounded-lg ${isDark ? 'bg-gray-900/50' : 'bg-gray-50'} shadow-lg`}>
+              <div key={idx} className={`p-8 rounded-lg ${isDark ? 'bg-neutral-800' : 'bg-gray-50'} shadow-lg transition-transform duration-300 hover:scale-[1.01] hover:shadow-2xl scroll-reveal`}>
                 <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-6">
                   <div>
                     <h4 className="text-2xl font-bold mb-2" style={{ color: garnet }}>{item.organization}</h4>
@@ -349,19 +504,22 @@ function App() {
               </div>
             ))}
           </div>
-          <div className={`mt-8 p-8 rounded-lg ${isDark ? 'bg-gray-900/50' : 'bg-gray-50'} shadow-lg`}>
-            <h4 className="text-2xl font-bold mb-4" style={{ color: garnet }}>Awards & Honors</h4>
+          <div className={`mt-8 p-8 rounded-lg ${isDark ? 'bg-neutral-800' : 'bg-gray-50'} shadow-lg transition-transform duration-300 hover:scale-[1.01] hover:shadow-2xl scroll-reveal`}>
+            <div className="flex items-center gap-3 mb-4">
+              <Award size={28} style={{ color: garnet }} />
+              <h4 className="text-2xl font-bold" style={{ color: garnet }}>Awards & Honors</h4>
+            </div>
             <ul className="space-y-2">
               <li className={`flex gap-3 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                <span style={{ color: garnet }}>•</span>
+                <Award size={20} style={{ color: garnet }} />
                 <span>President's List (Multiple Recipient)</span>
               </li>
               <li className={`flex gap-3 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                <span style={{ color: garnet }}>•</span>
+                <Award size={20} style={{ color: garnet }} />
                 <span>Duane and Mary Meyer Scholarship</span>
               </li>
               <li className={`flex gap-3 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                <span style={{ color: garnet }}>•</span>
+                <Award size={20} style={{ color: garnet }} />
                 <span>Engineering & Computing Scholarship</span>
               </li>
             </ul>
@@ -369,39 +527,55 @@ function App() {
         </div>
       </section>
 
+      {/* Gallery Section */}
+      <section id="gallery" className={`py-20 px-6 ${isDark ? 'bg-neutral-800' : 'bg-gray-50'}`}>
+        <div className="max-w-6xl mx-auto">
+          <div className="flex items-center gap-3 mb-12 scroll-reveal">
+            <Camera size={32} style={{ color: garnet }} />
+            <h3 className="text-4xl font-bold">Gallery</h3>
+          </div>
+
+          <div className="scroll-reveal">
+            <InfiniteGallery items={portfolioItems} isDark={isDark} />
+          </div>
+        </div>
+      </section>
+
       {/* Resume Section */}
-      <section id="resume" className={`py-20 px-6 ${isDark ? 'bg-gray-900/50' : 'bg-gray-50'}`}>
+      <section id="resume" className={`py-20 px-6 ${isDark ? 'bg-neutral-900' : 'bg-gray-50'}`}>
         <div className="max-w-6xl mx-auto text-center">
-          <div className="flex items-center justify-center gap-3 mb-8">
+          <div className="flex items-center justify-center gap-3 mb-8 scroll-reveal">
             <Download size={32} style={{ color: garnet }} />
             <h3 className="text-4xl font-bold">Resume</h3>
           </div>
-          <p className={`text-lg mb-8 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+          <p className={`text-lg mb-8 ${isDark ? 'text-gray-300' : 'text-gray-700'} scroll-reveal`}>
             Download my complete resume to learn more about my experience and qualifications.
           </p>
-          <a
-            href="./Shartle-Bryce-College-Resume.pdf"
-            download="Bryce_Shartle_Resume.pdf"
-            className="inline-flex items-center gap-3 px-8 py-4 rounded-lg text-white font-semibold transition-all hover:opacity-90 shadow-lg text-lg"
-            style={{ backgroundColor: garnet }}
-          >
-            <Download size={24} />
-            Download Resume
-          </a>
+          <div className="scroll-reveal">
+            <a
+              href="/Shartle,%20Bryce%20-%20College%20Resume%20copy.pdf"
+              download="Bryce_Shartle_Resume.pdf"
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-lg text-white font-semibold transition-all duration-300 hover:opacity-90 hover:scale-105 hover:shadow-2xl shadow-lg text-lg"
+              style={{ backgroundColor: garnet }}
+            >
+              <Download size={24} />
+              Download Resume
+            </a>
+          </div>
         </div>
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 px-6">
+      <section id="contact" className={`py-20 px-6 ${isDark ? 'bg-neutral-800' : 'bg-white'}`}>
         <div className="max-w-6xl mx-auto text-center">
-          <h3 className="text-4xl font-bold mb-8">Get In Touch</h3>
-          <p className={`text-lg mb-12 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+          <h3 className="text-4xl font-bold mb-8 scroll-reveal">Get In Touch</h3>
+          <p className={`text-lg mb-12 ${isDark ? 'text-gray-300' : 'text-gray-700'} scroll-reveal`}>
             I'm always open to discussing new opportunities, collaborations, or just connecting with fellow technology enthusiasts.
           </p>
-          <div className="flex gap-6 justify-center flex-wrap">
+          <div className="flex gap-6 justify-center flex-wrap scroll-reveal">
             <a
               href="mailto:bshartle@email.sc.edu"
-              className={`flex items-center gap-3 px-8 py-4 rounded-lg font-semibold transition-all hover:scale-105 ${isDark ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gray-100 hover:bg-gray-200'} shadow-lg`}
+              className={`flex items-center gap-3 px-8 py-4 rounded-lg font-semibold transition-all duration-300 ${isDark ? 'bg-neutral-700 hover:bg-neutral-600' : 'bg-gray-100 hover:bg-gray-200'} shadow-lg hover:scale-105 hover:shadow-2xl`}
             >
               <Mail size={24} style={{ color: garnet }} />
               bshartle@email.sc.edu
@@ -410,7 +584,7 @@ function App() {
               href="https://www.linkedin.com/in/bryce-shartle-15692a214/"
               target="_blank"
               rel="noopener noreferrer"
-              className={`flex items-center gap-3 px-8 py-4 rounded-lg font-semibold transition-all hover:scale-105 ${isDark ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gray-100 hover:bg-gray-200'} shadow-lg`}
+              className={`flex items-center gap-3 px-8 py-4 rounded-lg font-semibold transition-all duration-300 ${isDark ? 'bg-neutral-700 hover:bg-neutral-600' : 'bg-gray-100 hover:bg-gray-200'} shadow-lg hover:scale-105 hover:shadow-2xl`}
             >
               <Linkedin size={24} style={{ color: garnet }} />
               LinkedIn Profile
@@ -420,7 +594,7 @@ function App() {
       </section>
 
       {/* Footer */}
-      <footer className={`py-8 px-6 border-t ${isDark ? 'border-gray-800' : 'border-gray-200'}`}>
+      <footer className={`py-8 px-6 border-t ${isDark ? 'border-neutral-800' : 'border-gray-200'}`}>
         <div className="max-w-6xl mx-auto text-center">
           <p className={`${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
             © {new Date().getFullYear()} Bryce Shartle. All rights reserved.
