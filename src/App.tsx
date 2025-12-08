@@ -282,70 +282,73 @@ function App() {
         </div>
       </nav>
 
-      {/* Hero Section */}
+      {
+/* Hero Section */}
       <section id="home" className="pt-24 pb-20 px-6 relative overflow-hidden min-h-[70vh] md:min-h-[75vh] flex items-center">
         <div className="absolute inset-0 pointer-events-none">
-          <Database className={`absolute top-20 left-10 animate-fadeInOut1 ${isDark ? 'opacity-0' : 'opacity-0'}`} size={60} style={{ color: garnet }} />
-          <BarChart3 className={`absolute top-40 right-20 animate-fadeInOut2 ${isDark ? 'opacity-0' : 'opacity-0'}`} size={50} style={{ color: garnet }} />
-          <Cpu className={`absolute bottom-20 left-1/4 animate-fadeInOut3 ${isDark ? 'opacity-0' : 'opacity-0'}`} size={55} style={{ color: garnet }} />
-          <Network className={`absolute top-60 right-1/3 animate-fadeInOut4 ${isDark ? 'opacity-0' : 'opacity-0'}`} size={45} style={{ color: garnet }} />
-          <TrendingUp className={`absolute top-1/4 left-1/3 animate-fadeInOut5 ${isDark ? 'opacity-0' : 'opacity-0'}`} size={52} style={{ color: garnet }} />
-          <Server className={`absolute bottom-40 right-10 animate-fadeInOut6 ${isDark ? 'opacity-0' : 'opacity-0'}`} size={48} style={{ color: garnet }} />
-          <Code className={`absolute top-1/3 right-1/4 animate-fadeInOut1 ${isDark ? 'opacity-0' : 'opacity-0'}`} size={58} style={{ color: garnet }} />
-          <Database className={`absolute bottom-1/3 left-20 animate-fadeInOut2 ${isDark ? 'opacity-0' : 'opacity-0'}`} size={54} style={{ color: garnet }} />
-          <BarChart3 className={`absolute top-1/2 left-1/2 animate-fadeInOut3 ${isDark ? 'opacity-0' : 'opacity-0'}`} size={46} style={{ color: garnet }} />
-          <Network className={`absolute bottom-1/4 right-1/3 animate-fadeInOut4 ${isDark ? 'opacity-0' : 'opacity-0'}`} size={50} style={{ color: garnet }} />
-          <Cpu className={`absolute top-1/3 left-10 animate-fadeInOut5 ${isDark ? 'opacity-0' : 'opacity-0'}`} size={56} style={{ color: garnet }} />
+          <Database className={`absolute top-20 left-10 animate-...acity-0' : 'opacity-0'}`} size={60} style={{ color: garnet }} />
+          <BarChart3 className={`absolute top-40 right-20 animat...acity-0' : 'opacity-0'}`} size={50} style={{ color: garnet }} />
+          <Cpu className={`absolute bottom-20 left-1/4 animate-f...acity-0' : 'opacity-0'}`} size={55} style={{ color: garnet }} />
+          <Network className={`absolute top-60 right-1/3 animate...acity-0' : 'opacity-0'}`} size={45} style={{ color: garnet }} />
+          <TrendingUp className={`absolute top-1/4 left-1/3 anim...acity-0' : 'opacity-0'}`} size={52} style={{ color: garnet }} />
+          <Server className={`absolute bottom-40 right-10 animat...acity-0' : 'opacity-0'}`} size={48} style={{ color: garnet }} />
+          <Code className={`absolute top-1/3 right-1/4 animate-f...acity-0' : 'opacity-0'}`} size={58} style={{ color: garnet }} />
+          <Database className={`absolute bottom-1/3 left-20 anim...acity-0' : 'opacity-0'}`} size={54} style={{ color: garnet }} />
+          <BarChart3 className={`absolute top-1/2 left-1/2 anima...acity-0' : 'opacity-0'}`} size={46} style={{ color: garnet }} />
+          <Network className={`absolute bottom-1/4 right-1/3 ani...acity-0' : 'opacity-0'}`} size={50} style={{ color: garnet }} />
+          <Cpu className={`absolute top-1/3 left-10 animate-fade...acity-0' : 'opacity-0'}`} size={56} style={{ color: garnet }} />
           <TrendingUp className={`absolute bottom-32 left-1/2 animate-fadeInOut6 ${isDark ? 'opacity-0' : 'opacity-0'}`} size={44} style={{ color: garnet }} />
         </div>
 
-        <div className="max-w-6xl mx-auto w-full relative z-10">
-          <div className="relative">
-            <div className="max-w-3xl mb-8 md:mb-0">
-              <h2 className="text-5xl md:text-6xl font-bold mb-4 scroll-reveal animate-fadeInUp">Bryce Shartle</h2>
-              <p className="text-2xl md:text-3xl mb-6 scroll-reveal animate-fadeInUp" style={{ color: garnet, animationDelay: '0.1s' }}>Data Analyst & Technology Leader</p>
-              <p className={`text-lg md:text-xl mb-8 ${isDark ? 'text-gray-300' : 'text-gray-700'} max-w-2xl scroll-reveal animate-fadeInUp`} style={{ animationDelay: '0.2s' }}>
-                Recent graduate from the University of South Carolina seeking opportunities in data analytics, business intelligence, and technology leadership. Passionate about data-driven solutions, AI innovation, and operational excellence with experience in logistics optimization and strategic leadership.
-              </p>
-              <div className="flex gap-4 flex-wrap scroll-reveal animate-fadeInUp" style={{ animationDelay: '0.3s' }}>
-                <button
-                  onClick={() => scrollToSection('contact')}
-                  className="px-8 py-3 rounded-lg text-white font-semibold transition-all duration-300 hover:opacity-90 hover:scale-105 hover:shadow-2xl shadow-lg"
-                  style={{ backgroundColor: garnet }}
-                >
-                  Get In Touch
-                </button>
-                <button
-                  onClick={() => scrollToSection('resume')}
-                  className={`px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105 hover:shadow-2xl ${isDark ? 'bg-neutral-700 hover:bg-neutral-600' : 'bg-gray-100 hover:bg-gray-200'}`}
-                >
-                  View Resume
-                </button>
-              </div>
+        <div className="max-w-6xl mx-auto w-full relative z-10 flex flex-col md:flex-row items-center justify-between gap-10">
+          {/* Text content */}
+          <div className="flex-1 max-w-3xl scroll-reveal animate-fadeInUp" style={{ animationDelay: '0.1s' }}>
+            <h2 className="text-5xl md:text-6xl font-bold mb-4">Bryce Shartle</h2>
+            <p className="text-2xl md:text-3xl mb-6">Data Analyst & Technology Leader</p>
+            <p
+              className={`text-lg md:text-xl mb-8 ${isDark ? 'text-gray-300' : 'text-gray-200'}`}
+            >
+              Recent graduate from the University of South Carolina seeking opportunities in data analytics,
+              business intelligence, and technology leadership. Passionate about data-driven solutions, AI innovation,
+              and operational excellence with experience in logistics optimization and strategic leadership.
+            </p>
+            <div className="flex gap-4 flex-wrap">
+              <button
+                onClick={() => scrollToSection('contact')}
+                className="px-8 py-3 rounded-lg text-white font-semibold transform transition-all duration-300 hover:opacity-90 hover:scale-105 hover:shadow-2xl shadow-lg"
+                style={{ backgroundColor: garnet }}
+              >
+                Get In Touch
+              </button>
+              <button
+                onClick={() => scrollToSection('resume')}
+                className={`px-8 py-3 rounded-lg font-semibold transform transition-all duration-300 shadow-lg hover:shadow-2xl hover:scale-105 ${
+                  isDark
+                    ? 'bg-neutral-800 text-white border border-neutral-600 hover:bg-neutral-700'
+                    : 'bg-gray-100 text-gray-900 border border-gray-300 hover:bg-gray-200'
+                }`}
+              >
+                View Resume
+              </button>
             </div>
           </div>
-        </div>
 
-        <div className="absolute bottom-0 left-1/2 md:left-auto md:right-[8%] transform -translate-x-1/2 md:translate-x-0 z-0 pointer-events-none">
-          <div className="absolute inset-0 -bottom-8 left-1/2 transform -translate-x-1/2 w-[120%] h-[60%] bg-gradient-radial from-garnet/8 via-garnet/4 to-transparent blur-2xl opacity-60" style={{
-            background: `radial-gradient(ellipse at center bottom, ${garnet}15 0%, ${garnet}08 30%, transparent 70%)`
-          }}></div>
-
-          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-[80%] h-12 bg-black/20 blur-3xl opacity-40"></div>
-
-          <img
-            src="/subject2.png"
-            alt="Bryce Shartle"
-            className="relative h-[38vh] md:h-[49vh] lg:h-[56vh] w-auto object-contain object-bottom scroll-reveal animate-fadeInUp"
-            style={{
-              animationDelay: '0.4s',
-              filter: 'drop-shadow(0 25px 50px rgba(0, 0, 0, 0.25))'
-            }}
-          />
+          {/* Headshot */}
+          <div className="flex-1 mt-10 md:mt-0 flex justify-center md:justify-end relative">
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[80%] h-12 bg-black/20 blur-3xl opacity-40 pointer-events-none" />
+            <img
+              src="/subject2.png"
+              alt="Bryce Shartle"
+              className="relative h-[38vh] md:h-[49vh] lg:h-[56vh] max-h-[520px] w-auto object-contain object-bottom"
+              style={{
+                filter: 'drop-shadow(0 25px 50px rgba(0, 0, 0, 0.25))'
+              }}
+            />
+          </div>
         </div>
       </section>
 
-      {/* About Section */}
+{/* About Section */}
       <section id="about" className={`py-20 px-6 ${isDark ? 'bg-neutral-800' : 'bg-gray-50'}`}>
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center gap-3 mb-12 scroll-reveal">
