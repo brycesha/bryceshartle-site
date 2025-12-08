@@ -285,20 +285,16 @@ function App() {
       {
 /* Hero Section */}
       <section id="home" className="pt-24 pb-20 px-6 relative overflow-hidden min-h-[70vh] md:min-h-[75vh] flex items-center">
+        
         <div className="absolute inset-0 pointer-events-none">
-          <Database className={`absolute top-20 left-10 animate-...acity-0' : 'opacity-0'}`} size={60} style={{ color: garnet }} />
-          <BarChart3 className={`absolute top-40 right-20 animat...acity-0' : 'opacity-0'}`} size={50} style={{ color: garnet }} />
-          <Cpu className={`absolute bottom-20 left-1/4 animate-f...acity-0' : 'opacity-0'}`} size={55} style={{ color: garnet }} />
-          <Network className={`absolute top-60 right-1/3 animate...acity-0' : 'opacity-0'}`} size={45} style={{ color: garnet }} />
-          <TrendingUp className={`absolute top-1/4 left-1/3 anim...acity-0' : 'opacity-0'}`} size={52} style={{ color: garnet }} />
-          <Server className={`absolute bottom-40 right-10 animat...acity-0' : 'opacity-0'}`} size={48} style={{ color: garnet }} />
-          <Code className={`absolute top-1/3 right-1/4 animate-f...acity-0' : 'opacity-0'}`} size={58} style={{ color: garnet }} />
-          <Database className={`absolute bottom-1/3 left-20 anim...acity-0' : 'opacity-0'}`} size={54} style={{ color: garnet }} />
-          <BarChart3 className={`absolute top-1/2 left-1/2 anima...acity-0' : 'opacity-0'}`} size={46} style={{ color: garnet }} />
-          <Network className={`absolute bottom-1/4 right-1/3 ani...acity-0' : 'opacity-0'}`} size={50} style={{ color: garnet }} />
-          <Cpu className={`absolute top-1/3 left-10 animate-fade...acity-0' : 'opacity-0'}`} size={56} style={{ color: garnet }} />
-          <TrendingUp className={`absolute bottom-32 left-1/2 animate-fadeInOut6 ${isDark ? 'opacity-0' : 'opacity-0'}`} size={44} style={{ color: garnet }} />
+          <Database className="absolute top-20 left-6 animate-fadeInOut1 opacity-10" size={60} style={{ color: garnet }} />
+          <BarChart3 className="absolute top-40 right-10 animate-fadeInOut2 opacity-10" size={50} style={{ color: garnet }} />
+          <Cpu className="absolute bottom-20 left-1/4 animate-fadeInOut3 opacity-10" size={55} style={{ color: garnet }} />
+          <Network className="absolute top-60 right-1/3 animate-fadeInOut4 opacity-10" size={45} style={{ color: garnet }} />
+          <TrendingUp className="absolute top-1/4 left-1/3 animate-fadeInOut5 opacity-10" size={52} style={{ color: garnet }} />
+          <Server className="absolute bottom-40 right-10 animate-fadeInOut6 opacity-10" size={48} style={{ color: garnet }} />
         </div>
+
 
         <div className="max-w-6xl mx-auto w-full relative z-10 flex flex-col md:flex-row items-center justify-between gap-10">
           {/* Text content */}
@@ -306,7 +302,7 @@ function App() {
             <h2 className="text-5xl md:text-6xl font-bold mb-4">Bryce Shartle</h2>
             <p className="text-2xl md:text-3xl mb-6">Data Analyst & Technology Leader</p>
             <p
-              className={`text-lg md:text-xl mb-8 ${isDark ? 'text-gray-300' : 'text-gray-200'}`}
+              className={`text-lg md:text-xl mb-8 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}
             >
               Recent graduate from the University of South Carolina seeking opportunities in data analytics,
               business intelligence, and technology leadership. Passionate about data-driven solutions, AI innovation,
