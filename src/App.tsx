@@ -581,7 +581,7 @@ function App() {
               bshartle@email.sc.edu
             </a>
             <a
-              href="https://www.linkedin.com/in/bryce-shartle-15692a214/"
+              href="https://www.linkedin.com/in/bryceshartle/"
               target="_blank"
               rel="noopener noreferrer"
               className={`flex items-center gap-3 px-8 py-4 rounded-lg font-semibold transition-all duration-300 ${isDark ? 'bg-neutral-700 hover:bg-neutral-600' : 'bg-gray-100 hover:bg-gray-200'} shadow-lg hover:scale-105 hover:shadow-2xl`}
