@@ -553,8 +553,8 @@ function App() {
           </p>
           <div className="scroll-reveal">
             <a
-              href="/Shartle,%20Bryce%20-%20College%20Resume%20copy.pdf"
-              download="Bryce_Shartle_Resume.pdf"
+              href="/Shartle-Bryce-Resume.pdf"
+  download="Bryce_Shartle_Resume.pdf"
               className="inline-flex items-center gap-3 px-8 py-4 rounded-lg text-white font-semibold transition-all duration-300 hover:opacity-90 hover:scale-105 hover:shadow-2xl shadow-lg text-lg"
               style={{ backgroundColor: garnet }}
             >
