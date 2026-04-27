@@ -115,8 +115,10 @@ function App() {
   const garnet = '#73000A';
 
   const skills = [
-    'AI', 'Java', 'Python', 'SQL', 'Cisco Networking', 'Azure Storage',
-    'Linux', 'Power BI', 'Databricks', 'Microsoft Suite', 'VMware'
+    'AI & Machine Learning', 'Data Analytics', 'Business Intelligence', 'Power BI',
+    'SQL', 'Python', 'Databricks', 'Azure Storage',
+    'Stakeholder Management', 'Supply Chain Analytics', 'Process Optimization',
+    'Strategic Planning', 'Microsoft Suite', 'Java', 'Linux', 'Cisco Networking', 'VMware'
   ];
 
   const experiences = [
@@ -125,13 +127,23 @@ function App() {
       location: 'Greenville, SC (Hybrid)',
       positions: [
         {
+          title: 'Pipeline Data Analyst – Supply Chain & Logistics',
+          period: 'January 2026 – Present',
+          highlights: [
+            'Serving in a pipeline role within the Supply Chain & Logistics department designed to build cross-functional business acumen through immersive, hands-on experience.',
+            'Partner with stakeholders across operations to deliver data-driven insights, support executive decision-making, and identify opportunities to improve efficiency, reduce costs, and strengthen overall supply chain performance.',
+            'Led and executed a full-day, department-wide program for supply chain and logistics staff — managing budget, aligning cross-functional stakeholders, and driving end-to-end coordination to ensure effective delivery.',
+            'Actively investing in professional development through industry conferences and ongoing learning, strengthening the ability to contribute strategically and support broader business objectives.'
+          ]
+        },
+        {
           title: 'Logistics Data Analyst Intern',
-          period: 'May 2025 – Present',
+          period: 'May 2025 – December 2025',
           highlights: [
             'Led the development of a standardized tire stacking solution aimed at improving warehouse space utilization across the North American logistics network.',
             'Reverse-engineered an underutilized pallet stacking formula and enhanced it to better reflect real-world warehouse constraints, improving accuracy and usability.',
             'Integrated the solution into an interactive Power BI tool backed by SQL-managed data, validating the model through site visits and hands-on collaboration with warehouse teams to ensure successful adoption.',
-            'Currently continuing internship through the school year with a focus on leveraging Python and Databricks to streamline and accelerate data extraction from an Azure Data Lake, enabling faster access to insights and supporting data-driven initiatives.'
+            'Leveraged Python and Databricks to streamline and accelerate data extraction from an Azure Data Lake, enabling faster access to insights and supporting data-driven initiatives.'
           ]
         },
         {
@@ -151,7 +163,7 @@ function App() {
       positions: [
         {
           title: 'Resident Assistant',
-          period: 'April 2023 – Present (Seasonal)',
+          period: 'April 2023 – December 2025 (Seasonal)',
           highlights: [
             'Contributed significantly to campus community midway through freshman year by aiding in annual closing procedures, swiftly fostering a sense of community.',
             'The following year, spearheaded the opening of a brand-new residence hall, which demanded quick problem-solving and adaptability.',
@@ -175,6 +187,22 @@ function App() {
           ]
         }
       ]
+    },
+    {
+      company: 'Cox, Kliewer & Company, P.C.',
+      location: 'Virginia Beach, VA',
+      positions: [
+        {
+          title: 'Front End Assistant',
+          period: 'June 2019 – September 2019 (Part-time)',
+          highlights: [
+            'Digitized archival documents to improve organizational accessibility and records management efficiency.',
+            'Managed front-desk operations including directing calls, coordinating meetings, and maintaining office supplies in a fast-paced professional accounting environment.',
+            'Provided technical support to staff, developing a foundational understanding of office systems and professional service standards.',
+            'Gained early exposure to operational management and client-facing service, establishing a strong foundation for future professional roles.'
+          ]
+        }
+      ]
     }
   ];
 
@@ -187,9 +215,9 @@ function App() {
           title: 'Founding Father & Vice President',
           period: 'January 2024 – Present',
           description: [
-            'As a founding father and Vice President, instrumental in cementing the fraternity\'s footprint on campus, encompassing devising a strategic calendar, creating and curating leadership roles, and steering the chapter\'s day-to-day activities.',
-            'Journey mirrored many entrepreneurial endeavors, honing skills in brand development, fostering community, fiscal management, marketing initiatives, team leadership, and strategic foresight.',
-            'Journey has equipped with a robust toolkit for organizational leadership.'
+            'As a Founding Father and Vice President, played a central role in establishing the chapter\'s presence on campus — building the strategic calendar, defining leadership roles, and managing the day-to-day operations of a growing organization.',
+            'The experience closely paralleled an entrepreneurial venture, requiring skills in brand development, community building, budget management, marketing, team leadership, and long-term planning.',
+            'Came away with a strong, practical foundation in organizational leadership that continues to inform how I approach professional challenges.'
           ]
         }
       ]
@@ -300,13 +328,13 @@ function App() {
           {/* Text content */}
           <div className="flex-1 max-w-3xl scroll-reveal animate-fadeInUp" style={{ animationDelay: '0.1s' }}>
             <h2 className="text-5xl md:text-6xl font-bold mb-4">Bryce Shartle</h2>
-            <p className="text-2xl md:text-3xl mb-6">Data Analyst & Technology Leader</p>
+            <p className="text-2xl md:text-3xl mb-6">Business Professional & Analytical Thinker</p>
             <p
               className={`text-lg md:text-xl mb-8 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}
             >
-              Recent graduate from the University of South Carolina seeking opportunities in data analytics,
-              business intelligence, and technology leadership. Passionate about data-driven solutions, AI innovation,
-              and operational excellence with experience in logistics optimization and strategic leadership.
+              2025 graduate of the University of South Carolina with a foundation in business strategy, data analytics,
+              and information technology. Committed to bridging analytical insight with operational impact — leveraging
+              data, AI, and cross-functional collaboration to drive smarter decisions and sustainable business growth.
             </p>
             <div className="flex gap-4 flex-wrap">
               <button
@@ -331,15 +359,24 @@ function App() {
 
           {/* Headshot */}
           <div className="flex-1 mt-10 md:mt-0 flex justify-center md:justify-end relative">
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[80%] h-12 bg-black/20 blur-3xl opacity-40 pointer-events-none" />
-            <img
-              src="/subject2.png"
-              alt="Bryce Shartle"
-              className="relative h-[38vh] md:h-[49vh] lg:h-[56vh] max-h-[520px] w-auto object-contain object-bottom"
-              style={{
-                filter: 'drop-shadow(0 25px 50px rgba(0, 0, 0, 0.25))'
-              }}
-            />
+            <div className="relative">
+              {/* Decorative accent ring */}
+              <div
+                className="absolute -inset-1 rounded-2xl opacity-30"
+                style={{ background: `linear-gradient(135deg, ${garnet}, transparent 70%)` }}
+              />
+              <div
+                className={`relative rounded-2xl overflow-hidden shadow-2xl border ${isDark ? 'border-neutral-700' : 'border-gray-200'}`}
+                style={{ width: 210, height: 260 }}
+              >
+                <img
+                  src="/subject2.png"
+                  alt="Bryce Shartle"
+                  className="w-full h-full object-cover object-top"
+                  style={{ filter: 'drop-shadow(0 10px 30px rgba(0,0,0,0.3))' }}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -354,12 +391,12 @@ function App() {
           <div className="grid md:grid-cols-2 gap-12">
             <div className="scroll-reveal">
               <p className={`text-lg leading-relaxed mb-6 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                My professional journey has been shaped by impactful internships at Michelin, where I led the development of AI-enhanced logistics solutions that optimize warehouse operations across North America. I combine technical expertise in data analytics, SQL, Power BI, Python, and machine learning with strong leadership skills honed through roles as a Resident Assistant and Delta Chi Fraternity Vice President.
+                My career has been built on a commitment to turning information into action. Whether analyzing complex datasets, coordinating cross-functional initiatives, or supporting strategic decisions, I focus on delivering work that creates real business value. I bring a blend of analytical capability and operational awareness that allows me to contribute meaningfully across functions and industries.
               </p>
             </div>
             <div className="space-y-6 scroll-reveal">
               <p className={`text-lg leading-relaxed ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                I'm passionate about leveraging technology to solve complex business challenges and drive operational efficiency. My interests span across artificial intelligence, data analytics, motorsports, and exploring how data shapes modern society. I thrive in collaborative environments where I can apply both technical skills and strategic thinking to create meaningful impact.
+                I thrive at the intersection of people, process, and technology — applying structured thinking to ambiguous problems and collaborating with stakeholders to move ideas forward. I'm energized by environments where continuous improvement is the standard and where thoughtful use of data and tools can meaningfully change outcomes.
               </p>
             </div>
           </div>
@@ -460,7 +497,7 @@ function App() {
           <div className="mt-12 scroll-reveal">
             <h4 className="text-2xl font-semibold mb-6 text-center">Interests</h4>
             <p className={`text-lg text-center ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-              Motorsport • Artificial Intelligence • Impact of Data on Modern Society • Automation • Implementation of Power BI
+              Motorsport • Business Strategy • Emerging Technology • Artificial Intelligence • Process Innovation • How Data Shapes Decision-Making
             </p>
           </div>
         </div>
@@ -569,7 +606,7 @@ function App() {
         <div className="max-w-6xl mx-auto text-center">
           <h3 className="text-4xl font-bold mb-8 scroll-reveal">Get In Touch</h3>
           <p className={`text-lg mb-12 ${isDark ? 'text-gray-300' : 'text-gray-700'} scroll-reveal`}>
-            I'm always open to discussing new opportunities, collaborations, or just connecting with fellow technology enthusiasts.
+            Whether you're looking to connect professionally, explore a potential collaboration, or simply have a conversation — I'd be glad to hear from you.
           </p>
           <div className="flex gap-6 justify-center flex-wrap scroll-reveal">
             <a
