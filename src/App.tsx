@@ -219,7 +219,6 @@ function App() {
     { image: '/CHARTER_GROUP.JPG',    title: 'Delta Chi Chartering Group',     category: 'Leadership' },
     { image: '/CHARTER_SPEECH.JPG',   title: 'Chartering Speech',              category: 'Public Speaking' },
     { image: '/GRADUATION.JPG',       title: 'Graduation',                     category: 'Milestone' },
-    { image: '/IMG_0661.JPG',         title: 'Campus Life',                    category: 'Personal' },
     { image: '/MICHELIN_ABWTS.jpg',   title: 'Michelin ABWTS',                 category: 'Professional Experience' },
     { image: '/MICHELIN_GROUP.jpg',   title: 'Michelin Team',                  category: 'Professional Experience' },
     { image: '/MICHELIN_UT_CONF.jpeg',title: 'Michelin UT Conference',         category: 'Professional Experience' },
