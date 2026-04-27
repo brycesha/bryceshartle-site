@@ -8,72 +8,53 @@ interface GalleryItem {
 }
 
 function InfiniteGallery({ items, isDark }: { items: GalleryItem[], isDark: boolean }) {
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [isScrolling, setIsScrolling] = useState(false);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [isPaused, setIsPaused] = useState(false);
 
-  // Create tripled array for seamless infinite scroll
-  const tripledItems = [...items, ...items, ...items];
-
-  useEffect(() => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
-
-    // Start at the middle set of items
-    const itemWidth = 320 + 24; // width + gap
-    const startPosition = items.length * itemWidth;
-    container.scrollLeft = startPosition;
-
-    let scrollTimeout: NodeJS.Timeout;
-
-    const handleScroll = () => {
-      if (isScrolling) return;
-
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(() => {
-        const scrollLeft = container.scrollLeft;
-        const maxScroll = container.scrollWidth - container.clientWidth;
-        const singleSetWidth = items.length * itemWidth;
-
-        // If scrolled past the second set, jump back to first set
-        if (scrollLeft >= singleSetWidth * 2 - itemWidth) {
-          setIsScrolling(true);
-          container.scrollLeft = scrollLeft - singleSetWidth;
-          setTimeout(() => setIsScrolling(false), 50);
-        }
-        // If scrolled before the first set, jump to second set
-        else if (scrollLeft <= itemWidth) {
-          setIsScrolling(true);
-          container.scrollLeft = scrollLeft + singleSetWidth;
-          setTimeout(() => setIsScrolling(false), 50);
-        }
-      }, 150);
-    };
-
-    container.addEventListener('scroll', handleScroll);
-    return () => {
-      container.removeEventListener('scroll', handleScroll);
-      clearTimeout(scrollTimeout);
-    };
-  }, [items.length, isScrolling]);
+  // Duplicate items so the CSS marquee can loop seamlessly
+  const doubled = [...items, ...items];
 
   return (
     <div
-      ref={scrollContainerRef}
-      className="flex gap-6 overflow-x-auto pb-6 scrollbar-hide snap-x snap-mandatory"
-      style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+      className="overflow-hidden relative"
+      style={{ maskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)' }}
     >
-      {tripledItems.map((item, idx) => (
-        <div
-          key={idx}
-          className={`flex-shrink-0 w-80 h-80 rounded-2xl overflow-hidden shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl snap-center cursor-pointer ${isDark ? 'bg-neutral-700' : 'bg-white'}`}
-        >
-          <img
-            src={item.image}
-            alt={item.title}
-            className="w-full h-full object-cover"
-          />
-        </div>
-      ))}
+      <style>{`
+        @keyframes marquee {
+          0%   { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .gallery-track {
+          display: flex;
+          gap: 24px;
+          width: max-content;
+          animation: marquee ${items.length * 4}s linear infinite;
+        }
+        .gallery-track.paused {
+          animation-play-state: paused;
+        }
+      `}</style>
+      <div
+        ref={trackRef}
+        className={`gallery-track${isPaused ? ' paused' : ''}`}
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+      >
+        {doubled.map((item, idx) => (
+          <div
+            key={idx}
+            className={`flex-shrink-0 rounded-2xl overflow-hidden shadow-xl transition-transform duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer ${isDark ? 'bg-neutral-700' : 'bg-white'}`}
+            style={{ width: 300, height: 300 }}
+          >
+            <img
+              src={item.image}
+              alt={item.title}
+              className="w-full h-full object-cover"
+              draggable={false}
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -225,32 +206,16 @@ function App() {
   ];
 
   const portfolioItems = [
-  {
-    image: '/CAPSTONE.JPG',
-    title: 'Senior Capstone Presentation',
-    category: 'Capstone Project'
-  },
-  {
-    image: '/CHARTER_GROUP.JPG',
-    title: 'Delta Chi Chartering Group',
-    category: 'Leadership'
-  },
-  {
-    image: '/CHARTER_SPEECH.JPG',
-    title: 'Chartering Speech',
-    category: 'Public Speaking'
-  },
-  {
-    image: '/MICHELIN_GROUP.jpg',
-    title: 'Michelin Internship',
-    category: 'Professional Experience'
-  },
-  {
-    image: '/PRESIDENT.JPG',
-    title: 'President’s Reception',
-    category: 'Recognition'
-  }
-];
+    { image: '/CAPSTONE.JPG',         title: 'Senior Capstone Presentation',  category: 'Capstone Project' },
+    { image: '/CHARTER_GROUP.JPG',    title: 'Delta Chi Chartering Group',     category: 'Leadership' },
+    { image: '/CHARTER_SPEECH.JPG',   title: 'Chartering Speech',              category: 'Public Speaking' },
+    { image: '/GRADUATION.JPG',       title: 'Graduation',                     category: 'Milestone' },
+    { image: '/IMG_0661.JPG',         title: 'Campus Life',                    category: 'Personal' },
+    { image: '/MICHELIN_ABWTS.jpg',   title: 'Michelin ABWTS',                 category: 'Professional Experience' },
+    { image: '/MICHELIN_GROUP.jpg',   title: 'Michelin Team',                  category: 'Professional Experience' },
+    { image: '/MICHELIN_UT_CONF.jpeg',title: 'Michelin UT Conference',         category: 'Professional Experience' },
+    { image: '/PRESIDENT.JPG',        title: "President's Reception",          category: 'Recognition' },
+  ];
 
   return (
     <div className={`min-h-screen transition-colors duration-300 ${isDark ? 'bg-neutral-900 text-white' : 'bg-white text-gray-900'}`}>
@@ -312,7 +277,7 @@ function App() {
 
       {
 /* Hero Section */}
-      <section id="home" className="pt-24 pb-20 px-6 relative overflow-hidden min-h-[70vh] md:min-h-[75vh] flex items-center">
+      <section id="home" className="pt-24 pb-12 px-6 relative overflow-hidden min-h-[auto] md:min-h-[75vh] flex items-center">
         
         <div className="absolute inset-0 pointer-events-none">
           <Database className="absolute top-20 left-6 animate-fadeInOut1 opacity-10" size={60} style={{ color: garnet }} />
@@ -324,7 +289,7 @@ function App() {
         </div>
 
 
-        <div className="max-w-6xl mx-auto w-full relative z-10 flex flex-col md:flex-row items-center justify-between gap-10">
+        <div className="max-w-6xl mx-auto w-full relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
           {/* Text content */}
           <div className="flex-1 max-w-3xl scroll-reveal animate-fadeInUp" style={{ animationDelay: '0.1s' }}>
             <h2 className="text-5xl md:text-6xl font-bold mb-4">Bryce Shartle</h2>
@@ -358,24 +323,16 @@ function App() {
           </div>
 
           {/* Headshot */}
-          <div className="flex-1 mt-10 md:mt-0 flex justify-center md:justify-end relative">
-            <div className="relative">
-              {/* Decorative accent ring */}
-              <div
-                className="absolute -inset-1 rounded-2xl opacity-30"
-                style={{ background: `linear-gradient(135deg, ${garnet}, transparent 70%)` }}
+          <div className="flex-shrink-0 flex justify-center md:justify-end mt-4 md:mt-0">
+            <div
+              className={`rounded-2xl overflow-hidden shadow-2xl ${isDark ? 'bg-neutral-800' : 'bg-gray-100'}`}
+              style={{ width: 200, height: 250, border: `2px solid ${garnet}33` }}
+            >
+              <img
+                src="/subject2.png"
+                alt="Bryce Shartle"
+                className="w-full h-full object-cover object-center"
               />
-              <div
-                className={`relative rounded-2xl overflow-hidden shadow-2xl border ${isDark ? 'border-neutral-700' : 'border-gray-200'}`}
-                style={{ width: 210, height: 260 }}
-              >
-                <img
-                  src="/subject2.png"
-                  alt="Bryce Shartle"
-                  className="w-full h-full object-cover object-top"
-                  style={{ filter: 'drop-shadow(0 10px 30px rgba(0,0,0,0.3))' }}
-                />
-              </div>
             </div>
           </div>
         </div>
