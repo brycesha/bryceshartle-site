@@ -219,7 +219,7 @@ function App() {
       roles: [
         {
           title: 'Founding Father & Vice President',
-          period: 'January 2024 – Present',
+          period: 'January 2024 – December 2025',
           description: [
             'As a Founding Father and Vice President, played a central role in establishing the chapter\'s presence on campus — building the strategic calendar, defining leadership roles, and managing the day-to-day operations of a growing organization.',
             'The experience closely paralleled an entrepreneurial venture, requiring skills in brand development, community building, budget management, marketing, team leadership, and long-term planning.',
@@ -463,24 +463,28 @@ function App() {
             <h4 className="text-2xl font-semibold mb-8 text-center">Programs & Communities</h4>
             <div className="grid md:grid-cols-2 gap-6">
               <div className={`p-6 rounded-lg ${isDark ? 'bg-neutral-700' : 'bg-white'} shadow-lg transition-transform duration-300 hover:scale-[1.03] hover:shadow-2xl`}>
-                <p className={`text-lg ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Formula SAE (Tractive Team)</p>
+                <p className={`text-lg font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Rhodes Fellows Innovation Community</p>
+                <p className={`text-sm mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Freshman – Junior</p>
               </div>
               <div className={`p-6 rounded-lg ${isDark ? 'bg-neutral-700' : 'bg-white'} shadow-lg transition-transform duration-300 hover:scale-[1.03] hover:shadow-2xl`}>
-                <p className={`text-lg ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Rhodos Fellows Innovation Community</p>
-              </div>
-              <div className={`p-6 rounded-lg ${isDark ? 'bg-neutral-700' : 'bg-white'} shadow-lg transition-transform duration-300 hover:scale-[1.03] hover:shadow-2xl`}>
-                <p className={`text-lg ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Delta Chi Fraternity</p>
-              </div>
-              <div className={`p-6 rounded-lg ${isDark ? 'bg-neutral-700' : 'bg-white'} shadow-lg transition-transform duration-300 hover:scale-[1.03] hover:shadow-2xl`}>
-                <p className={`text-lg ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>IDEA Community</p>
+                <p className={`text-lg font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Formula SAE (Tractive Team)</p>
+                <p className={`text-sm mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Junior</p>
               </div>
               <div className={`p-6 rounded-lg ${isDark ? 'bg-neutral-700' : 'bg-white'} shadow-lg transition-transform duration-300 hover:scale-[1.03] hover:shadow-2xl`}>
                 <p className={`text-lg font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Resident Assistant Program</p>
-                <p className={`text-sm mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>April 2023 – December 2025</p>
+                <p className={`text-sm mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Freshman – Senior</p>
+              </div>
+              <div className={`p-6 rounded-lg ${isDark ? 'bg-neutral-700' : 'bg-white'} shadow-lg transition-transform duration-300 hover:scale-[1.03] hover:shadow-2xl`}>
+                <p className={`text-lg font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Delta Chi Fraternity (Vice President)</p>
+                <p className={`text-sm mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Sophomore – Senior</p>
+              </div>
+              <div className={`p-6 rounded-lg ${isDark ? 'bg-neutral-700' : 'bg-white'} shadow-lg transition-transform duration-300 hover:scale-[1.03] hover:shadow-2xl`}>
+                <p className={`text-lg font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>IDEA Community</p>
+                <p className={`text-sm mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Senior</p>
               </div>
               <div className={`p-6 rounded-lg ${isDark ? 'bg-neutral-700' : 'bg-white'} shadow-lg transition-transform duration-300 hover:scale-[1.03] hover:shadow-2xl`}>
                 <p className={`text-lg font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Volunteer – St. Thomas More Catholic Church</p>
-                <p className={`text-sm mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>August 2024 – December 2025</p>
+                <p className={`text-sm mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Junior – Senior</p>
               </div>
             </div>
           </div>
@@ -535,21 +539,37 @@ function App() {
               <Award size={28} style={{ color: garnet }} />
               <h4 className="text-2xl font-bold" style={{ color: garnet }}>Awards & Honors</h4>
             </div>
-            <ul className="space-y-2">
+            <ul className="space-y-3">
               <li className={`flex gap-3 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                <Award size={20} style={{ color: garnet }} />
-                <span>President's List (Multiple Recipient)</span>
+                <Award size={20} className="flex-shrink-0 mt-0.5" style={{ color: garnet }} />
+                <div>
+                  <span className="font-medium">President's List (4.0)</span>
+                  <p className={`text-sm mt-0.5 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Fall 2022, Spring 2024, Fall 2024, Spring 2025, Fall 2025</p>
+                </div>
               </li>
               <li className={`flex gap-3 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                <Award size={20} style={{ color: garnet }} />
-                <span>Duane and Mary Meyer Scholarship</span>
+                <Award size={20} className="flex-shrink-0 mt-0.5" style={{ color: garnet }} />
+                <div>
+                  <span className="font-medium">Dean's List (3.5+)</span>
+                  <p className={`text-sm mt-0.5 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Spring 2023, Fall 2023</p>
+                </div>
               </li>
               <li className={`flex gap-3 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                <Award size={20} style={{ color: garnet }} />
-                <span>Engineering & Computing Scholarship</span>
+                <Award size={20} className="flex-shrink-0 mt-0.5" style={{ color: garnet }} />
+                <div>
+                  <span className="font-medium">Engineering & Computing Scholarship</span>
+                  <p className={`text-sm mt-0.5 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Sophomore – Junior</p>
+                </div>
               </li>
               <li className={`flex gap-3 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                <Award size={20} style={{ color: garnet }} />
+                <Award size={20} className="flex-shrink-0 mt-0.5" style={{ color: garnet }} />
+                <div>
+                  <span className="font-medium">Duane and Mary Meyer Scholarship</span>
+                  <p className={`text-sm mt-0.5 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Junior</p>
+                </div>
+              </li>
+              <li className={`flex gap-3 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                <Award size={20} className="flex-shrink-0 mt-0.5" style={{ color: garnet }} />
                 <div>
                   <span className="font-medium">AI and Career Empowerment Certificate</span>
                   <p className={`text-sm mt-0.5 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>University of Maryland – Robert H. Smith School of Business · December 2025</p>
