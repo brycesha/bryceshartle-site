@@ -198,6 +198,22 @@ function App() {
 
   const leadership = [
     {
+      organization: 'University of South Carolina – Housing',
+      location: 'Columbia, SC',
+      roles: [
+        {
+          title: 'Senior Resident Assistant & Peer Leader',
+          period: 'April 2023 – December 2025 (Seasonal)',
+          description: [
+            'Progressed from Resident Assistant to a recognized peer leader responsible for training, mentoring, and serving as an ongoing resource for both new and returning RAs across the program.',
+            'In a senior capacity, led training sessions, shared institutional knowledge, and provided guidance on community standards, conflict resolution, and resident support — effectively serving in a supervisory-adjacent role.',
+            'Opened a brand-new residence hall, requiring rapid problem-solving, adaptability, and the ability to establish community norms from the ground up.',
+            'Consistently maintained a safe, inclusive, and supportive environment for incoming freshmen, serving as a first point of contact for academic, personal, and logistical challenges.'
+          ]
+        }
+      ]
+    },
+    {
       organization: 'Delta Chi Fraternity',
       location: 'Columbia, SC',
       roles: [
@@ -290,11 +306,11 @@ function App() {
         
         <div className="absolute inset-0 pointer-events-none">
           <Database className="absolute top-20 left-6 animate-fadeInOut1 opacity-10" size={60} style={{ color: garnet }} />
-          <BarChart3 className="absolute top-40 right-10 animate-fadeInOut2 opacity-10" size={50} style={{ color: garnet }} />
-          <Cpu className="absolute bottom-20 left-1/4 animate-fadeInOut3 opacity-10" size={55} style={{ color: garnet }} />
-          <Network className="absolute top-60 right-1/3 animate-fadeInOut4 opacity-10" size={45} style={{ color: garnet }} />
-          <TrendingUp className="absolute top-1/4 left-1/3 animate-fadeInOut5 opacity-10" size={52} style={{ color: garnet }} />
-          <Server className="absolute bottom-40 right-10 animate-fadeInOut6 opacity-10" size={48} style={{ color: garnet }} />
+          <BarChart3 className="absolute top-40 right-10 animate-fadeInOut2 opacity-10" size={50} style={{ color: isDark ? '#ffffff' : garnet }} />
+          <Cpu className="absolute bottom-20 left-1/4 animate-fadeInOut3 opacity-10" size={55} style={{ color: isDark ? '#ffffff' : garnet }} />
+          <Network className="absolute top-60 right-1/3 animate-fadeInOut4 opacity-10" size={45} style={{ color: isDark ? '#ffffff' : garnet }} />
+          <TrendingUp className="absolute top-1/4 left-1/3 animate-fadeInOut5 opacity-10" size={52} style={{ color: isDark ? '#ffffff' : garnet }} />
+          <Server className="absolute bottom-40 right-10 animate-fadeInOut6 opacity-10" size={48} style={{ color: isDark ? '#ffffff' : garnet }} />
         </div>
 
 
@@ -378,7 +394,7 @@ function App() {
               <div>
                 <p className={`text-lg mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}><span className="font-semibold">Major:</span> Integrated Information Technology</p>
                 <p className={`text-lg mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}><span className="font-semibold">Minors:</span> Computer Science, Cybersecurity Operations</p>
-                <p className="text-xl font-bold" style={{ color: garnet }}>GPA: 3.93</p>
+                <p className="text-xl font-bold" style={{ color: garnet }}>GPA: 3.94</p>
               </div>
             </div>
           </div>
@@ -458,6 +474,14 @@ function App() {
               <div className={`p-6 rounded-lg ${isDark ? 'bg-neutral-700' : 'bg-white'} shadow-lg transition-transform duration-300 hover:scale-[1.03] hover:shadow-2xl`}>
                 <p className={`text-lg ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>IDEA Community</p>
               </div>
+              <div className={`p-6 rounded-lg ${isDark ? 'bg-neutral-700' : 'bg-white'} shadow-lg transition-transform duration-300 hover:scale-[1.03] hover:shadow-2xl`}>
+                <p className={`text-lg font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Resident Assistant Program</p>
+                <p className={`text-sm mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>April 2023 – December 2025</p>
+              </div>
+              <div className={`p-6 rounded-lg ${isDark ? 'bg-neutral-700' : 'bg-white'} shadow-lg transition-transform duration-300 hover:scale-[1.03] hover:shadow-2xl`}>
+                <p className={`text-lg font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Volunteer – St. Thomas More Catholic Church</p>
+                <p className={`text-sm mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>August 2024 – December 2025</p>
+              </div>
             </div>
           </div>
           <div className="mt-12 scroll-reveal">
@@ -524,6 +548,13 @@ function App() {
                 <Award size={20} style={{ color: garnet }} />
                 <span>Engineering & Computing Scholarship</span>
               </li>
+              <li className={`flex gap-3 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                <Award size={20} style={{ color: garnet }} />
+                <div>
+                  <span className="font-medium">AI and Career Empowerment Certificate</span>
+                  <p className={`text-sm mt-0.5 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>University of Maryland – Robert H. Smith School of Business · December 2025</p>
+                </div>
+              </li>
             </ul>
           </div>
         </div>
@@ -576,11 +607,11 @@ function App() {
           </p>
           <div className="flex gap-6 justify-center flex-wrap scroll-reveal">
             <a
-              href="mailto:bshartle@email.sc.edu"
+              href="mailto:bryceshartle@gmail.com"
               className={`flex items-center gap-3 px-8 py-4 rounded-lg font-semibold transition-all duration-300 ${isDark ? 'bg-neutral-700 hover:bg-neutral-600' : 'bg-gray-100 hover:bg-gray-200'} shadow-lg hover:scale-105 hover:shadow-2xl`}
             >
               <Mail size={24} style={{ color: garnet }} />
-              bshartle@email.sc.edu
+              bryceshartle@gmail.com
             </a>
             <a
               href="https://www.linkedin.com/in/bryceshartle/"
