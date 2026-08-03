@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Moon, Sun, Mail, Linkedin, Download, GraduationCap, Briefcase, Code, Award, Menu, X, Camera, Users, Target, TrendingUp, Handshake, BarChart2 } from 'lucide-react';
 
 interface GalleryItem {
@@ -8,61 +8,42 @@ interface GalleryItem {
 }
 
 function InfiniteGallery({ items, isDark }: { items: GalleryItem[], isDark: boolean }) {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const isDragging = useRef(false);
-  const startX = useRef(0);
-  const scrollStart = useRef(0);
-
-  const onMouseDown = (e: React.MouseEvent) => {
-    isDragging.current = true;
-    startX.current = e.clientX;
-    scrollStart.current = trackRef.current?.scrollLeft ?? 0;
-    if (trackRef.current) trackRef.current.style.cursor = 'grabbing';
-  };
-
-  const onMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging.current || !trackRef.current) return;
-    const dx = e.clientX - startX.current;
-    trackRef.current.scrollLeft = scrollStart.current - dx;
-  };
-
-  const stopDrag = () => {
-    isDragging.current = false;
-    if (trackRef.current) trackRef.current.style.cursor = 'grab';
-  };
-
   return (
-    <div className="relative">
+    <div className="relative overflow-hidden"
+      style={{ maskImage: 'linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%)',
+               WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%)' }}
+    >
       <style>{`
-        .gallery-scroll::-webkit-scrollbar { display: none; }
-        .gallery-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+        @keyframes marquee-scroll {
+          0%   { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .marquee-track {
+          display: flex;
+          gap: 24px;
+          width: max-content;
+          animation: marquee-scroll ${items.length * 3.5}s linear infinite;
+        }
+        .marquee-track:hover {
+          animation-play-state: paused;
+        }
       `}</style>
-      <div
-        ref={trackRef}
-        className="gallery-scroll flex gap-6 overflow-x-auto pb-2 select-none"
-        style={{ cursor: 'grab' }}
-        onMouseDown={onMouseDown}
-        onMouseMove={onMouseMove}
-        onMouseUp={stopDrag}
-        onMouseLeave={stopDrag}
-      >
-        {items.map((item, idx) => (
+      <div className="marquee-track">
+        {[...items, ...items].map((item, idx) => (
           <div
             key={idx}
-            className={`flex-shrink-0 rounded-2xl overflow-hidden shadow-xl transition-transform duration-300 hover:shadow-2xl ${isDark ? 'bg-neutral-700' : 'bg-white'}`}
-            style={{ width: 300, height: 300 }}
+            className="flex-shrink-0 rounded-2xl overflow-hidden shadow-xl transition-transform duration-300 hover:scale-105 hover:shadow-2xl"
+            style={{ width: 280, height: 280, backgroundColor: isDark ? '#00205B' : '#FFFFFF' }}
           >
             <img
               src={item.image}
               alt={item.title}
-              className="w-full h-full object-cover pointer-events-none"
+              className="w-full h-full object-cover"
               draggable={false}
             />
           </div>
         ))}
       </div>
-      <div className="absolute inset-y-0 left-0 w-8 pointer-events-none" style={{ background: 'linear-gradient(to right, var(--fade-color, transparent), transparent)' }} />
-      <div className="absolute inset-y-0 right-0 w-8 pointer-events-none" style={{ background: 'linear-gradient(to left, var(--fade-color, transparent), transparent)' }} />
     </div>
   );
 }
