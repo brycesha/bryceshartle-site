@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { Moon, Sun, Mail, Linkedin, Download, GraduationCap, Briefcase, Code, Award, Menu, X, Camera, Users, Target, TrendingUp, Handshake, BarChart2 } from 'lucide-react';
 
 interface GalleryItem {
@@ -101,6 +101,24 @@ function App() {
     setMobileMenuOpen(false);
   };
 
+  // Randomize icon positions on each page load
+  const iconPositions = useMemo(() => {
+    const rand = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
+    return [
+      { top: rand(8, 20), left: rand(2, 15), right: undefined, bottom: undefined },
+      { top: rand(25, 50), right: rand(2, 15), left: undefined, bottom: undefined },
+      { bottom: rand(8, 25), left: rand(15, 35), top: undefined, right: undefined },
+      { top: rand(50, 70), right: rand(20, 45), left: undefined, bottom: undefined },
+      { top: rand(18, 35), left: rand(30, 50), right: undefined, bottom: undefined },
+      { bottom: rand(25, 50), right: rand(5, 20), top: undefined, left: undefined },
+    ].map(p => ({
+      top:    p.top    !== undefined ? `${p.top}%`    : undefined,
+      bottom: p.bottom !== undefined ? `${p.bottom}%` : undefined,
+      left:   p.left   !== undefined ? `${p.left}%`   : undefined,
+      right:  p.right  !== undefined ? `${p.right}%`  : undefined,
+    }));
+  }, []);
+
   // Michelin primary blue
   const michelinBlue = '#27509B';
   const michelinYellow = '#FCE500';
@@ -116,15 +134,15 @@ function App() {
   const experiences = [
     {
       company: 'Michelin',
-      location: 'New York Territory',
+      location: 'Greenville, SC · NY/NJ Territory',
       positions: [
         {
           title: 'B2C Sales Representative – WDA Channel',
           period: 'August 2026 – Present',
           highlights: [
-            'Serving as a Sales Representative within Michelin\'s Wholesale Distributor & Associate (WDA) channel, responsible for managing and growing a defined territory spanning New York and the New Jersey metro area.',
-            'The role is designed to develop well-rounded sales professionals through an intensive training program — building deep knowledge of Michelin\'s product portfolio, brand value proposition, and consultative selling approach through a combination of classroom learning, hands-on application, and formal assessments.',
-            'Upon completing training, focus shifts to building and managing relationships with distributors across a range of sizes and business models, identifying growth opportunities within the territory, communicating product value, and driving sell-through across the channel.'
+            'Responsible for managing and developing client relationships across a defined territory in the New York and New Jersey area, serving distributors of varying sizes within Michelin\'s Wholesale Distributor & Associate (WDA) channel.',
+            'Focus on understanding each account\'s needs and business dynamics, identifying growth opportunities, and delivering consistent value through strong product knowledge, consultative engagement, and reliable follow-through.',
+            'Building a presence in the territory through regular client contact, strengthening existing partnerships, and developing new business across the channel.'
           ]
         },
         {
@@ -306,14 +324,15 @@ function App() {
 
       {/* Hero Section */}
       <section id="home" className="pt-24 pb-12 px-6 relative overflow-hidden min-h-[auto] md:min-h-[75vh] flex items-center">
-        {/* Background accent icons — business/people themed, subtle */}
+        {/* Background accent icons — positions randomized on each load */}
         <div className="absolute inset-0 pointer-events-none">
-          <Handshake  className="absolute top-20 left-6 animate-fadeInOut1 opacity-10"   size={60} style={{ color: isDark ? '#87A4D0' : michelinBlue }} />
-          <Users      className="absolute top-40 right-10 animate-fadeInOut2 opacity-10" size={50} style={{ color: isDark ? '#87A4D0' : michelinBlue }} />
-          <Target     className="absolute bottom-20 left-1/4 animate-fadeInOut3 opacity-10" size={55} style={{ color: isDark ? '#87A4D0' : michelinBlue }} />
-          <TrendingUp className="absolute top-60 right-1/3 animate-fadeInOut4 opacity-10" size={45} style={{ color: isDark ? '#87A4D0' : michelinBlue }} />
-          <BarChart2  className="absolute top-1/4 left-1/3 animate-fadeInOut5 opacity-10" size={52} style={{ color: isDark ? '#87A4D0' : michelinBlue }} />
-          <Briefcase  className="absolute bottom-40 right-10 animate-fadeInOut6 opacity-10" size={48} style={{ color: isDark ? '#87A4D0' : michelinBlue }} />
+          {[Handshake, Users, Target, TrendingUp, BarChart2, Briefcase].map((Icon, i) => (
+            <Icon key={i}
+              className={`absolute animate-fadeInOut${i + 1} opacity-10`}
+              size={[60, 50, 55, 45, 52, 48][i]}
+              style={{ color: isDark ? '#87A4D0' : michelinBlue, ...iconPositions[i] }}
+            />
+          ))}
         </div>
 
         <div className="max-w-6xl mx-auto w-full relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
@@ -363,17 +382,13 @@ function App() {
             <GraduationCap size={32} style={{ color: michelinBlue }} />
             <h3 className="text-4xl font-bold">About Me</h3>
           </div>
-          <div className="grid md:grid-cols-2 gap-12">
-            <div className="scroll-reveal">
-              <p className="text-lg leading-relaxed mb-6" style={{ color: isDark ? '#CCCCCC' : '#404040' }}>
-                My career has been shaped by a genuine interest in how businesses grow — whether that means building tools that surface the right information at the right time, or showing up in a territory and earning the trust of the people you serve. I've worked across operations, cross-functional teams, and now customer-facing sales, and what connects all of it is a consistent focus on delivering real value to the people around me.
-              </p>
-            </div>
-            <div className="scroll-reveal">
-              <p className="text-lg leading-relaxed" style={{ color: isDark ? '#CCCCCC' : '#404040' }}>
-                I thrive in environments where the work is varied, the stakes are real, and there's always something more to learn. Whether I'm aligning stakeholders around a shared goal, managing a client relationship, or navigating a new challenge, I bring the same energy — structured thinking, a bias toward action, and a genuine investment in doing the job well.
-              </p>
-            </div>
+          <div className="scroll-reveal">
+            <p className="text-lg leading-relaxed mb-6" style={{ color: isDark ? '#CCCCCC' : '#404040' }}>
+              My career has been shaped by a genuine interest in how businesses grow — whether that means building tools that surface the right information at the right time, or showing up in a territory and earning the trust of the people you serve. I've worked across operations, cross-functional teams, and customer-facing sales, and what connects all of it is a consistent focus on delivering real value to the people around me.
+            </p>
+            <p className="text-lg leading-relaxed" style={{ color: isDark ? '#CCCCCC' : '#404040' }}>
+              I thrive in environments where the work is varied, the stakes are real, and there's always something more to learn. Whether I'm aligning stakeholders around a shared goal, managing a client relationship, or navigating a new challenge, I bring the same energy — structured thinking, a bias toward action, and a genuine investment in doing the job well.
+            </p>
           </div>
 
           <div className="mt-12 p-8 rounded-lg shadow-lg scroll-reveal transition-transform duration-300 hover:scale-[1.02] hover:shadow-2xl"
